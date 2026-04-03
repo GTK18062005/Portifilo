@@ -1,5 +1,5 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  // No Tailwind plugin needed for now - we'll use inline styles
+});

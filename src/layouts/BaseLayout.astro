@@ -1,0 +1,61 @@
+---
+// Base layout for all pages
+const pageTitle = Astro.props.title || "Your Name | Portfolio";
+const pageDescription = Astro.props.description || "Developer portfolio showcasing my work";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    
+    <!-- Tailwind is already included via Astro's integration -->
+  </head>
+  <body class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 shadow-sm">
+      <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          Portfolio
+        </a>
+        <div class="space-x-6">
+          <a href="#projects" class="hover:text-blue-600 transition">Projects</a>
+          <a href="#about" class="hover:text-blue-600 transition">About</a>
+          <a href="#contact" class="hover:text-blue-600 transition">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <!-- Simple footer -->
+    <footer class="text-center py-8 text-gray-600 dark:text-gray-400">
+      <p>© 2025 Your Name. Built with Astro and TailwindCSS</p>
+    </footer>
+
+    <!-- Dark mode toggle script -->
+    <script>
+      // Check for saved theme preference
+      const theme = localStorage.getItem('theme') || 
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      
+      // Add toggle button functionality
+      const toggleButton = document.createElement('button');
+      toggleButton.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+      toggleButton.className = 'fixed bottom-4 right-4 p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg z-50 hover:scale-110 transition';
+      toggleButton.onclick = () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        toggleButton.innerHTML = isDark ? '☀️' : '🌙';
+      };
+      document.body.appendChild(toggleButton);
+    </script>
+  </body>
+</html>
